@@ -3,6 +3,7 @@ from .models import KhlTeam, NhlTeam, KhlGameStat, NhlGameStat
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from score.forms import *
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 
 
@@ -31,6 +32,7 @@ def nhl_archive(request):
     data = NhlGameStat.objects.all().values().order_by('-game_id')[:5]
     return render(request, 'score/nhl_archive.html', context={'data': data})
 
+@login_required
 @permission_required('score.add_khlgamestat')
 def makekhldata(request):
     if request.method == 'POST':
@@ -44,6 +46,7 @@ def makekhldata(request):
         khlform = KhlGameStatForm()
     return render(request, "score/make_khl_data.html", {'form': khlform})
 
+@login_required
 @permission_required('score.add_nhlgamestat')
 def makenhldata(request):
     if request.method == 'POST':
