@@ -1,0 +1,30 @@
+{% extends 'score/base.html' %}
+{% block content %}
+
+ <h4>Команда {{team}}</h4>
+ <h3>Статистика по последней игре. </h3>
+ <h2>Броски по воротам соперника в первом периоде {{fp_ft_shot}}</h2>
+ <h2>Отбитые броски в первом периоде {{fp_ft_reflected}}</h2>
+ <h2>Броски по воротам соперника во втором периоде {{sp_ft_shot}}</h2>
+ <h2>Отбитые броски во втором периоде {{sp_ft_reflected}}</h2>
+ <h2>Броски по воротам соперника в третьем периоде {{tp_ft_shot}}</h2>
+ <h2>Отбитые броски в третьем {{tp_ft_reflected}}</h2>
+ <h2>Дата игры {{game_data}}</h2>
+
+ <h3>Статистика за последние пять матчей. </h3>
+ <h2>Броски по воротам соперника в первом периоде {{shots_in_first_period}}</h2>
+ <h2>Отбитые броски в первом периоде {{reflected_in_first_period}}</h2>
+ <h2>Броски по воротам соперника во втором периоде {{shots_in_second_period}}</h2>
+ <h2>Отбитые броски во втором периоде {{reflected_in_second_period}}</h2>
+ <h2>Броски по воротам соперника в третьем периоде {{shots_in_third_period}}</h2>
+ <h2>Отбитые броски в третьем преиоде {{reflected_in_third_period}}</h2>
+
+ <h3>Общая статистика по всем играм. </h3>
+ <h2>Броски по воротам соперника в первом периоде {{shots_in_first_period_all_games}}</h2>
+ <h2>Отбитые броски в первом периоде {{reflected_in_first_period_all_games}}</h2>
+ <h2>Броски по воротам соперника во втором периоде {{shots_in_second_period_all_games}}</h2>
+ <h2>Отбитые броски во втором периоде {{reflected_in_second_period_all_games}}</h2>
+ <h2>Броски по воротам соперника в третьем периоде {{shots_in_third_period_all_games}}</h2>
+ <h2>Отбитые броски в третьем периоде {{reflected_in_third_period_all_games}}</h2>
+
+{% endblock %}
