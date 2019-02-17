@@ -24,12 +24,12 @@ def nhl(request):
 
 
 def khl_archive(request):
-    data = KhlGameStat.objects.all().values().order_by('-game_id')[:5]
+    data = KhlGameStat.objects.all().values().order_by('-game_id')
     return render(request, 'score/khl_archive.html', context={'data': data})
 
 
 def nhl_archive(request):
-    data = NhlGameStat.objects.all().values().order_by('-game_id')[:5]
+    data = NhlGameStat.objects.all().values().order_by('-game_id')
     return render(request, 'score/nhl_archive.html', context={'data': data})
 
 @login_required
@@ -68,8 +68,8 @@ def thanks(request):
 def khlteamstat(request, name):
     def get_last_game_numbers(name):
         last_game_context = {}
-        games = KhlGameStat.objects.filter(first_team_name_id=name) | \
-                KhlGameStat.objects.filter(second_team_name_id=name)
+        games = KhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
+                KhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
         last_game = games[:1].values()
         last_game = last_game[0]
         if last_game['first_team_name_id'] == name:
@@ -111,8 +111,8 @@ def khlteamstat(request, name):
 
     def get_last_five_games_numbers(name):
         last_five_games_context = {}
-        games = KhlGameStat.objects.filter(first_team_name_id=name) | \
-                KhlGameStat.objects.filter(second_team_name_id=name)
+        games = KhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
+                KhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
         last_five_games = games[:5].values()
         shots_in_first_period = []
         reflected_in_first_period = []
@@ -163,8 +163,8 @@ def khlteamstat(request, name):
 
     def get_all_games_numbers(name):
         all_games_context = {}
-        games = KhlGameStat.objects.filter(first_team_name_id=name) | \
-                KhlGameStat.objects.filter(second_team_name_id=name)
+        games = KhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
+                KhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
         all_games = games.values()
         shots_in_first_period_all_games = []
         reflected_in_first_period_all_games = []
@@ -225,8 +225,8 @@ def khlteamstat(request, name):
 def nhlteamstat(request, name):
     def get_last_game_numbers(name):
         last_game_context = {}
-        games = NhlGameStat.objects.filter(first_team_name_id=name) | \
-                NhlGameStat.objects.filter(second_team_name_id=name)
+        games = NhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
+                NhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
         last_game = games[:1].values()
         last_game = last_game[0]
         if last_game['first_team_name_id'] == name:
@@ -268,8 +268,8 @@ def nhlteamstat(request, name):
 
     def get_last_five_games_numbers(name):
         last_five_games_context = {}
-        games = NhlGameStat.objects.filter(first_team_name_id=name) | \
-                NhlGameStat.objects.filter(second_team_name_id=name)
+        games = NhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
+                NhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
         last_five_games = games[:5].values()
         shots_in_first_period = []
         reflected_in_first_period = []
@@ -320,8 +320,8 @@ def nhlteamstat(request, name):
 
     def get_all_games_numbers(name):
         all_games_context = {}
-        games = NhlGameStat.objects.filter(first_team_name_id=name) | \
-                NhlGameStat.objects.filter(second_team_name_id=name)
+        games = NhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
+                NhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
         all_games = games.values()
         shots_in_first_period_all_games = []
         reflected_in_first_period_all_games = []

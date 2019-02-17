@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import url
+from django.urls import path
 from . import views
 
 urlpatterns = [
-    url(r'^home', views.home_page, name='home_page'),
-    url(r'khl/(\D+)/', views.khlteamstat, name='khl_team'),
-    url(r'nhl/(\D+)/', views.nhlteamstat, name='nhl_team'),
-    url(r'khl$', views.khl, name='khl'),
-    url(r'nhl$', views.nhl, name='nhl'),
-    url(r'^thanks/', views.thanks, name='thanks'),
-    url(r'^archivekhl', views.khl_archive, name='khl_archive'),
-    url(r'^archivenhl', views.nhl_archive, name='nhl_archive'),
-    url(r'^makekhldata', views.makekhldata, name='make_khl_data'),
-    url(r'^makenhldata', views.makenhldata, name='make_nhl_data'),
+    path('', views.home_page, name='home_page'),
+    path('khl/', views.khl, name='khl'),
+    path('nhl/', views.nhl, name='nhl'),
+    path('khl/<name>/', views.khlteamstat, name='khl_team'),
+    path('nhl/<name>/', views.nhlteamstat, name='nhl_team'),
+    path('thanks', views.thanks, name='thanks'),
+    path('archivekhl', views.khl_archive, name='khl_archive'),
+    path('archivenhl', views.nhl_archive, name='nhl_archive'),
+    path('makekhldata', views.makekhldata, name='make_khl_data'),
+    path('makenhldata', views.makenhldata, name='make_nhl_data'),
 ]

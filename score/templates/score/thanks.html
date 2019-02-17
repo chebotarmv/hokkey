@@ -7,9 +7,12 @@
 <body>
 
 <h1>Успешно</h1>
-<h3><a href="http://chebotarmv.pythonanywhere.com/makekhldata">Нажми на меня чтобы внести еще КХЛ данные!</a></h3>
-<h3><a href="http://chebotarmv.pythonanywhere.com/makenhldata">Нажми на меня чтобы внести еще НХЛ данные!</a></h3>
-<h3><a href="http://chebotarmv.pythonanywhere.com/home">Для перехода на главную нажми на меня</a></h3>
+{% url 'make_khl_data' as make_khl_data %}
+<h3><a href="{{make_khl_data}}">Нажми на меня чтобы внести еще КХЛ данные!</a></h3>
+{% url 'make_nhl_data' as make_nhl_data %}
+<h3><a href="{{make_nhl_data}}">Нажми на меня чтобы внести еще НХЛ данные!</a></h3>
+{% url 'home_page' as home %}
+<h3><a href="{{home}}">Для перехода на главную нажми на меня</a></h3>
 
 </body>
 </html>

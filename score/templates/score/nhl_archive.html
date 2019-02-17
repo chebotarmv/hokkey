@@ -2,11 +2,13 @@
 {% block content %}
 
  {% for dat in data %}
- <div> {{ dat.game_id }}
-   <a href="http://chebotarmv.pythonanywhere.com/nhl/{{team}}">
-     {{ dat.first_team_name_id }} </a> -
-     <a href="http://chebotarmv.pythonanywhere.com/nhl/{{team}}">
-       {{ dat.second_team_name_id }} </a> {{ dat.game_data }} </div>
+ <div>
+     {{ dat.game_id }}
+     {% url 'nhl_team' as nhl %}
+     <a href="nhl/{{ dat.first_team_name_id }}"> {{ dat.first_team_name_id }} </a> -
+     <a href="nhl/{{ dat.second_team_name_id }}"> {{ dat.second_team_name_id }} </a>
+     {{ dat.game_data }}
+ </div>
  {% endfor%}
 
 {% endblock %}

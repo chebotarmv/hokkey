@@ -5,15 +5,21 @@
   <title>Score site</title>
  </head>
  <body>
- <div><a href="http://chebotarmv.pythonanywhere.com/home">Главная</a> -
-   <a href="http://chebotarmv.pythonanywhere.com/khl">KHL</a> -
-   <a href="http://chebotarmv.pythonanywhere.com/archivekhl/">KHL Archive</a> -
-   <a href="http://chebotarmv.pythonanywhere.com/makekhldata"
-   target="_blank">Внести КХЛ данные</a> -
-   <a href="http://chebotarmv.pythonanywhere.com/nhl">NHL</a> -
-   <a href="http://chebotarmv.pythonanywhere.com/archivenhl/">NHL Archive</a> -
-   <a href="http://chebotarmv.pythonanywhere.com/makenhldata"
-   target="_blank">Внести НХЛ данные</a> </div>
+ <div>
+     {% url 'home_page' as home %}
+     <a href="{{home}}">Главная</a> -
+     {% url 'khl' as khl %}
+     <a href="{{khl}}">KHL</a> -
+     {% url 'khl_archive' as khl_archive %}
+     <a href="{{khl_archive}}">KHL Archive</a> -
+     {% url 'make_khl_data' as make_khl_data %}
+     <a href="{{make_khl_data}}" target="_blank">Внести КХЛ данные</a> -
+     {% url 'nhl' as nhl %}
+     <a href="{{nhl}}">NHL</a> -
+     {% url 'nhl_archive' as nhl_archive %}
+     <a href="{{nhl_archive}}">NHL Archive</a> -
+     {% url 'make_nhl_data' as make_nhl_data %}
+     <a href="{{make_nhl_data}}" target="_blank">Внести НХЛ данные</a> - </div>
  <div>
      {% block content %}
      {% endblock %}
