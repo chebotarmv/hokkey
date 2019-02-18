@@ -4,15 +4,13 @@
  <p>Последние игры КХЛ</p>
 
   {% for dat in khldata %}
- <div> {{ dat.game_id }} {{ dat.first_team_name_id }}
-   {{ dat.second_team_name_id }} {{ dat.game_data }} </div>
+<div> {{ dat.game_id }} {{ dat.first_team_name_id }} {{ dat.second_team_name_id }} {{ dat.game_data }} </div>
  {% endfor%}
 
  <p>Последние игры НХЛ</p>
 
   {% for dat in nhldata %}
- <div> {{ dat.game_id }} {{ dat.first_team_name_id }}
-   {{ dat.second_team_name_id }} {{ dat.game_data }} </div>
+ <div> {{ dat.game_id }} {{ dat.first_team_name_id }} {{ dat.second_team_name_id }} {{ dat.game_data }} </div>
  {% endfor%}
 
 {% endblock %}

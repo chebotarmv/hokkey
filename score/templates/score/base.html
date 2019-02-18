@@ -1,7 +1,10 @@
-<!DOCTYPE html>
+{% load static %}
 <html>
  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Score site</title>
  </head>
  <body>
@@ -19,7 +22,8 @@
      {% url 'nhl_archive' as nhl_archive %}
      <a href="{{nhl_archive}}">NHL Archive</a> -
      {% url 'make_nhl_data' as make_nhl_data %}
-     <a href="{{make_nhl_data}}" target="_blank">Внести НХЛ данные</a> - </div>
+     <a href="{{make_nhl_data}}" target="_blank">Внести НХЛ данные</a>
+ </div>
  <div>
      {% block content %}
      {% endblock %}
