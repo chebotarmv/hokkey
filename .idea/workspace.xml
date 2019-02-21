@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f35c1c25-3aa1-44b8-9a7a-185e5a028794" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/score/static/css/base.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/score/from_csv.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/score/from_csv_nhl.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/score/templates/score/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/score/templates/score/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/score/templates/score/home_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/score/templates/score/home_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/score/templates/score/khlteamstat.html" beforeDir="false" afterPath="$PROJECT_DIR$/score/templates/score/khlteamstat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/score/to_sql.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/score/to_sql_nhl.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,13 +17,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/score/views.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/score/from_csv.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3543">
-              <caret line="323" column="91" selection-start-line="323" selection-start-column="91" selection-end-line="323" selection-end-column="91" />
+            <state relative-caret-position="555">
+              <caret line="37" column="58" selection-end-line="38" />
               <folding>
-                <element signature="e#24#86#0" expanded="true" />
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/score/from_csv_nhl.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -76,6 +89,8 @@
         <option value="$PROJECT_DIR$/score/static/css/base.css" />
         <option value="$PROJECT_DIR$/score/templates/score/khlteamstat.html" />
         <option value="$PROJECT_DIR$/score/templates/score/base.html" />
+        <option value="$PROJECT_DIR$/score/from_csv.py" />
+        <option value="$PROJECT_DIR$/score/from_csv_nhl.py" />
       </list>
     </option>
   </component>
@@ -91,6 +106,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -103,16 +119,20 @@
               <item name="hokkey" type="462c0819:PsiDirectoryNode" />
               <item name="score" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="hokkey" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hokkey" type="462c0819:PsiDirectoryNode" />
+              <item name="sports" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Загрузки/wc1.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -127,7 +147,49 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.to_sql_nhl">
+  <component name="RunManager" selected="Python.from_csv_nhl">
+    <configuration name="from_csv" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="hokkey" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/score" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/score/from_csv.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="from_csv_nhl" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="hokkey" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/score" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/score/from_csv_nhl.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="to_sql" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="hokkey" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -172,6 +234,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.from_csv_nhl" />
+        <item itemvalue="Python.from_csv" />
         <item itemvalue="Python.to_sql_nhl" />
         <item itemvalue="Python.to_sql" />
       </list>
@@ -192,8 +256,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1920" height="1012" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24986821" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24986821" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -312,16 +377,6 @@
           <caret selection-end-line="9" selection-end-column="82" />
           <folding>
             <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/score/to_sql.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" selection-end-line="32" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -455,10 +510,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/score/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3543">
+        <state relative-caret-position="798">
           <caret line="323" column="91" selection-start-line="323" selection-start-column="91" selection-end-line="323" selection-end-column="91" />
           <folding>
             <element signature="e#24#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/score/to_sql.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/score/from_csv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="37" column="58" selection-end-line="38" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/score/from_csv_nhl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
