@@ -68,155 +68,108 @@ def thanks(request):
 def khlteamstat(request, name):
     def get_last_game_numbers(name):
         last_game_context = {}
-        games = KhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
-                KhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
-        last_game = games[:1].values()
-        last_game = last_game[0]
-        if last_game['first_team_name_id'] == name:
-            team = last_game['first_team_name_id']
-            last_game_context['team'] = team
-            fp_ft_shot = last_game['fp_ft_shot']
-            last_game_context['fp_ft_shot'] = fp_ft_shot
-            fp_ft_reflected = last_game['fp_ft_reflected']
-            last_game_context['fp_ft_reflected'] = fp_ft_reflected
-            sp_ft_shot = last_game['sp_ft_shot']
-            last_game_context['sp_ft_shot'] = sp_ft_shot
-            sp_ft_reflected = last_game['sp_ft_reflected']
-            last_game_context['sp_ft_reflected'] = sp_ft_reflected
-            tp_ft_shot = last_game['tp_ft_shot']
-            last_game_context['tp_ft_shot'] = tp_ft_shot
-            tp_ft_reflected = last_game['tp_ft_reflected']
-            last_game_context['tp_ft_reflected'] = tp_ft_reflected
-            game_data = last_game['game_data']
-            last_game_context['game_data'] = game_data
+        games_if_first_team = KhlGameStat.objects.filter(first_team_name_id=name)
+        games_if_second_team = KhlGameStat.objects.filter(second_team_name_id=name)
+        game = games_if_first_team.union(games_if_second_team).order_by('-game_id').values()[0]
+        if game['first_team_name_id'] == name:
+            last_game_context['team'] = game['first_team_name_id']
+            last_game_context['fp_ft_shot'] = game['fp_ft_shot']
+            last_game_context['fp_ft_reflected'] = game['fp_ft_reflected']
+            last_game_context['sp_ft_shot'] = game['sp_ft_shot']
+            last_game_context['sp_ft_reflected'] = game['sp_ft_reflected']
+            last_game_context['tp_ft_shot'] = game['tp_ft_shot']
+            last_game_context['tp_ft_reflected'] = game['tp_ft_reflected']
+            last_game_context['game_data'] = game['game_data']
             return last_game_context
         else:
-            team = last_game['first_team_name_id']
-            last_game_context['team'] = team
-            fp_st_shot = last_game['fp_ft_shot']
-            last_game_context['fp_ft_shot'] = fp_st_shot
-            fp_st_reflected = last_game['fp_ft_reflected']
-            last_game_context['fp_ft_reflected'] = fp_st_reflected
-            sp_st_shot = last_game['sp_ft_shot']
-            last_game_context['sp_ft_shot'] = sp_st_shot
-            sp_st_reflected = last_game['sp_ft_reflected']
-            last_game_context['sp_ft_reflected'] = sp_st_reflected
-            tp_st_shot = last_game['tp_ft_shot']
-            last_game_context['tp_ft_shot'] = tp_st_shot
-            tp_st_reflected = last_game['tp_ft_reflected']
-            last_game_context['tp_ft_reflected'] = tp_st_reflected
-            game_data = last_game['game_data']
-            last_game_context['game_data'] = game_data
+            last_game_context['team'] = game['second_team_name_id']
+            last_game_context['fp_ft_shot'] = game['fp_ft_shot']
+            last_game_context['fp_ft_reflected'] = game['fp_ft_reflected']
+            last_game_context['sp_ft_shot'] = game['sp_ft_shot']
+            last_game_context['sp_ft_reflected'] = game['sp_ft_reflected']
+            last_game_context['tp_ft_shot'] = game['tp_ft_shot']
+            last_game_context['tp_ft_reflected'] = game['tp_ft_reflected']
+            last_game_context['game_data'] = game['game_data']
             return last_game_context
 
     def get_last_five_games_numbers(name):
         last_five_games_context = {}
-        games = KhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
-                KhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
-        last_five_games = games[:5].values()
+        games_if_first_team = KhlGameStat.objects.filter(first_team_name_id=name)
+        games_if_second_team = KhlGameStat.objects.filter(second_team_name_id=name)
+        games = games_if_first_team.union(games_if_second_team).order_by('-game_id').values()[:5]
         shots_in_first_period = []
         reflected_in_first_period = []
         shots_in_second_period = []
         reflected_in_second_period = []
         shots_in_third_period = []
         reflected_in_third_period = []
-        for game in last_five_games:
+        for game in games:
             if game['first_team_name_id'] == name:
-                fp_ft_shot = game['fp_ft_shot']
-                fp_ft_reflected = game['fp_ft_reflected']
-                sp_ft_shot = game['sp_ft_shot']
-                sp_ft_reflected = game['sp_ft_reflected']
-                tp_ft_shot = game['tp_ft_shot']
-                tp_ft_reflected = game['tp_ft_reflected']
-                shots_in_first_period.append(int(fp_ft_shot))
-                reflected_in_first_period.append(int(fp_ft_reflected))
-                shots_in_second_period.append(int(sp_ft_shot))
-                reflected_in_second_period.append(int(sp_ft_reflected))
-                shots_in_third_period.append(int(tp_ft_shot))
-                reflected_in_third_period.append(int(tp_ft_reflected))
+                shots_in_first_period.append(int(game['fp_ft_shot']))
+                reflected_in_first_period.append(int(game['fp_ft_reflected']))
+                shots_in_second_period.append(int(game['sp_ft_shot']))
+                reflected_in_second_period.append(int(game['sp_ft_reflected']))
+                shots_in_third_period.append(int(game['tp_ft_shot']))
+                reflected_in_third_period.append(int(game['tp_ft_reflected']))
             else:
-                fp_st_shot = game['fp_st_shot']
-                fp_st_reflected = game['fp_st_reflected']
-                sp_st_shot = game['sp_st_shot']
-                sp_st_reflected = game['sp_st_reflected']
-                tp_st_shot = game['tp_st_shot']
-                tp_st_reflected = game['tp_st_reflected']
-                shots_in_first_period.append(int(fp_st_shot))
-                reflected_in_first_period.append(int(fp_st_reflected))
-                shots_in_second_period.append(int(sp_st_shot))
-                reflected_in_second_period.append(int(sp_st_reflected))
-                shots_in_third_period.append(int(tp_st_shot))
-                reflected_in_third_period.append(int(tp_st_reflected))
-        shots_in_first_period = sum(shots_in_first_period) // len(shots_in_first_period)
-        last_five_games_context['shots_in_first_period'] = shots_in_first_period
-        reflected_in_first_period = sum(reflected_in_first_period) // len(reflected_in_first_period)
-        last_five_games_context['reflected_in_first_period'] = reflected_in_first_period
-        shots_in_second_period = sum(shots_in_second_period) // len(shots_in_second_period)
-        last_five_games_context['shots_in_second_period'] = shots_in_second_period
-        reflected_in_second_period = sum(reflected_in_second_period) // len(reflected_in_second_period)
-        last_five_games_context['reflected_in_second_period'] = reflected_in_second_period
-        shots_in_third_period = sum(shots_in_third_period) // len(shots_in_third_period)
-        last_five_games_context['shots_in_third_period'] = shots_in_third_period
-        reflected_in_third_period = sum(reflected_in_third_period) // len(reflected_in_third_period)
-        last_five_games_context['reflected_in_third_period'] = reflected_in_third_period
+                shots_in_first_period.append(int(game['fp_st_shot']))
+                reflected_in_first_period.append(int(game['fp_st_reflected']))
+                shots_in_second_period.append(int(game['sp_st_shot']))
+                reflected_in_second_period.append(int(game['sp_st_reflected']))
+                shots_in_third_period.append(int(game['tp_st_shot']))
+                reflected_in_third_period.append(int(game['tp_st_reflected']))
+        last_five_games_context['shots_in_first_period'] = sum(shots_in_first_period) // \
+                                                           len(shots_in_first_period)
+        last_five_games_context['reflected_in_first_period'] = sum(reflected_in_first_period) // \
+                                                               len(reflected_in_first_period)
+        last_five_games_context['shots_in_second_period'] = sum(shots_in_second_period) // \
+                                                            len(shots_in_second_period)
+        last_five_games_context['reflected_in_second_period'] = sum(reflected_in_second_period) // \
+                                                                len(reflected_in_second_period)
+        last_five_games_context['shots_in_third_period'] = sum(shots_in_third_period) // \
+                                                           len(shots_in_third_period)
+        last_five_games_context['reflected_in_third_period'] = sum(reflected_in_third_period) // \
+                                                               len(reflected_in_third_period)
         return last_five_games_context
 
     def get_all_games_numbers(name):
         all_games_context = {}
-        games = KhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
-                KhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
-        all_games = games.values()
+        games_if_first_team = KhlGameStat.objects.filter(first_team_name_id=name)
+        games_if_second_team = KhlGameStat.objects.filter(second_team_name_id=name)
+        games = games_if_first_team.union(games_if_second_team).order_by('-game_id').values()
         shots_in_first_period_all_games = []
         reflected_in_first_period_all_games = []
         shots_in_second_period_all_games = []
         reflected_in_second_period_all_games = []
         shots_in_third_period_all_games = []
         reflected_in_third_period_all_games = []
-        for game in all_games:
+        for game in games:
             if game['first_team_name_id'] == name:
-                fp_ft_shot = game['fp_ft_shot']
-                fp_ft_reflected = game['fp_ft_reflected']
-                sp_ft_shot = game['sp_ft_shot']
-                sp_ft_reflected = game['sp_ft_reflected']
-                tp_ft_shot = game['tp_ft_shot']
-                tp_ft_reflected = game['tp_ft_reflected']
-                shots_in_first_period_all_games.append(int(fp_ft_shot))
-                reflected_in_first_period_all_games.append(int(fp_ft_reflected))
-                shots_in_second_period_all_games.append(int(sp_ft_shot))
-                reflected_in_second_period_all_games.append(int(sp_ft_reflected))
-                shots_in_third_period_all_games.append(int(tp_ft_shot))
-                reflected_in_third_period_all_games.append(int(tp_ft_reflected))
+                shots_in_first_period_all_games.append(int(game['fp_ft_shot']))
+                reflected_in_first_period_all_games.append(int(game['fp_ft_reflected']))
+                shots_in_second_period_all_games.append(int(game['sp_ft_shot']))
+                reflected_in_second_period_all_games.append(int(game['sp_ft_reflected']))
+                shots_in_third_period_all_games.append(int(game['tp_ft_shot']))
+                reflected_in_third_period_all_games.append(int(game['tp_ft_reflected']))
             else:
-                fp_st_shot = game['fp_st_shot']
-                fp_st_reflected = game['fp_st_reflected']
-                sp_st_shot = game['sp_st_shot']
-                sp_st_reflected = game['sp_st_reflected']
-                tp_st_shot = game['tp_st_shot']
-                tp_st_reflected = game['tp_st_reflected']
-                shots_in_first_period_all_games.append(int(fp_st_shot))
-                reflected_in_first_period_all_games.append(int(fp_st_reflected))
-                shots_in_second_period_all_games.append(int(sp_st_shot))
-                reflected_in_second_period_all_games.append(int(sp_st_reflected))
-                shots_in_third_period_all_games.append(int(tp_st_shot))
-                reflected_in_third_period_all_games.append(int(tp_st_reflected))
-        shots_in_first_period_all_games = sum(shots_in_first_period_all_games) // \
-                                          len(shots_in_first_period_all_games)
-        all_games_context['shots_in_first_period_all_games'] = shots_in_first_period_all_games
-        reflected_in_first_period_all_games = sum(reflected_in_first_period_all_games) // \
-                                              len(reflected_in_first_period_all_games)
-        all_games_context['reflected_in_first_period_all_games'] = reflected_in_first_period_all_games
-        shots_in_second_period_all_games = sum(shots_in_second_period_all_games) // \
-                                           len(shots_in_second_period_all_games)
-        all_games_context['shots_in_second_period_all_games'] = shots_in_second_period_all_games
-        reflected_in_second_period_all_games = sum(reflected_in_second_period_all_games) // \
-                                               len(reflected_in_second_period_all_games)
-        all_games_context['reflected_in_second_period_all_games'] = reflected_in_second_period_all_games
-        shots_in_third_period_all_games = sum(shots_in_third_period_all_games) // \
-                                          len(shots_in_third_period_all_games)
-        all_games_context['shots_in_third_period_all_games'] = shots_in_third_period_all_games
-        reflected_in_third_period_all_games = sum(reflected_in_third_period_all_games) // \
-                                              len(reflected_in_third_period_all_games)
-        all_games_context['reflected_in_third_period_all_games'] = reflected_in_third_period_all_games
+                shots_in_first_period_all_games.append(int(game['fp_st_shot']))
+                reflected_in_first_period_all_games.append(int(game['fp_st_reflected']))
+                shots_in_second_period_all_games.append(int(game['sp_st_shot']))
+                reflected_in_second_period_all_games.append(int(game['sp_st_reflected']))
+                shots_in_third_period_all_games.append(int(game['tp_st_shot']))
+                reflected_in_third_period_all_games.append(int(game['tp_st_reflected']))
+        all_games_context['shots_in_first_period_all_games'] = sum(shots_in_first_period_all_games) // \
+                                                               len(shots_in_first_period_all_games)
+        all_games_context['reflected_in_first_period_all_games'] = sum(reflected_in_first_period_all_games) // \
+                                                                   len(reflected_in_first_period_all_games)
+        all_games_context['shots_in_second_period_all_games'] = sum(shots_in_second_period_all_games) // \
+                                                                len(shots_in_second_period_all_games)
+        all_games_context['reflected_in_second_period_all_games'] = sum(reflected_in_second_period_all_games) // \
+                                                                    len(reflected_in_second_period_all_games)
+        all_games_context['shots_in_third_period_all_games'] = sum(shots_in_third_period_all_games) // \
+                                                               len(shots_in_third_period_all_games)
+        all_games_context['reflected_in_third_period_all_games'] = sum(reflected_in_third_period_all_games) // \
+                                                                   len(reflected_in_third_period_all_games)
         return all_games_context
     context = {**get_last_game_numbers(name), **get_last_five_games_numbers(name), **get_all_games_numbers(name)}
     return render(request, 'score/khlteamstat.html', context)
@@ -225,155 +178,108 @@ def khlteamstat(request, name):
 def nhlteamstat(request, name):
     def get_last_game_numbers(name):
         last_game_context = {}
-        games = NhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
-                NhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
-        last_game = games[:1].values()
-        last_game = last_game[0]
-        if last_game['first_team_name_id'] == name:
-            team = last_game['first_team_name_id']
-            last_game_context['team'] = team
-            fp_ft_shot = last_game['fp_ft_shot']
-            last_game_context['fp_ft_shot'] = fp_ft_shot
-            fp_ft_reflected = last_game['fp_ft_reflected']
-            last_game_context['fp_ft_reflected'] = fp_ft_reflected
-            sp_ft_shot = last_game['sp_ft_shot']
-            last_game_context['sp_ft_shot'] = sp_ft_shot
-            sp_ft_reflected = last_game['sp_ft_reflected']
-            last_game_context['sp_ft_reflected'] = sp_ft_reflected
-            tp_ft_shot = last_game['tp_ft_shot']
-            last_game_context['tp_ft_shot'] = tp_ft_shot
-            tp_ft_reflected = last_game['tp_ft_reflected']
-            last_game_context['tp_ft_reflected'] = tp_ft_reflected
-            game_data = last_game['game_data']
-            last_game_context['game_data'] = game_data
+        games_if_first_team = NhlGameStat.objects.filter(first_team_name_id=name)
+        games_if_second_team = NhlGameStat.objects.filter(second_team_name_id=name)
+        game = games_if_first_team.union(games_if_second_team).order_by('-game_id').values()[0]
+        if game['first_team_name_id'] == name:
+            last_game_context['team'] = game['first_team_name_id']
+            last_game_context['fp_ft_shot'] = game['fp_ft_shot']
+            last_game_context['fp_ft_reflected'] = game['fp_ft_reflected']
+            last_game_context['sp_ft_shot'] = game['sp_ft_shot']
+            last_game_context['sp_ft_reflected'] = game['sp_ft_reflected']
+            last_game_context['tp_ft_shot'] = game['tp_ft_shot']
+            last_game_context['tp_ft_reflected'] = game['tp_ft_reflected']
+            last_game_context['game_data'] = game['game_data']
             return last_game_context
         else:
-            team = last_game['first_team_name_id']
-            last_game_context['team'] = team
-            fp_st_shot = last_game['fp_ft_shot']
-            last_game_context['fp_ft_shot'] = fp_st_shot
-            fp_st_reflected = last_game['fp_ft_reflected']
-            last_game_context['fp_ft_reflected'] = fp_st_reflected
-            sp_st_shot = last_game['sp_ft_shot']
-            last_game_context['sp_ft_shot'] = sp_st_shot
-            sp_st_reflected = last_game['sp_ft_reflected']
-            last_game_context['sp_ft_reflected'] = sp_st_reflected
-            tp_st_shot = last_game['tp_ft_shot']
-            last_game_context['tp_ft_shot'] = tp_st_shot
-            tp_st_reflected = last_game['tp_ft_reflected']
-            last_game_context['tp_ft_reflected'] = tp_st_reflected
-            game_data = last_game['game_data']
-            last_game_context['game_data'] = game_data
+            last_game_context['team'] = game['second_team_name_id']
+            last_game_context['fp_ft_shot'] = game['fp_ft_shot']
+            last_game_context['fp_ft_reflected'] = game['fp_ft_reflected']
+            last_game_context['sp_ft_shot'] = game['sp_ft_shot']
+            last_game_context['sp_ft_reflected'] = game['sp_ft_reflected']
+            last_game_context['tp_ft_shot'] = game['tp_ft_shot']
+            last_game_context['tp_ft_reflected'] = game['tp_ft_reflected']
+            last_game_context['game_data'] = game['game_data']
             return last_game_context
 
     def get_last_five_games_numbers(name):
         last_five_games_context = {}
-        games = NhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
-                NhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
-        last_five_games = games[:5].values()
+        games_if_first_team = NhlGameStat.objects.filter(first_team_name_id=name)
+        games_if_second_team = NhlGameStat.objects.filter(second_team_name_id=name)
+        games = games_if_first_team.union(games_if_second_team).order_by('-game_id').values()[:5]
         shots_in_first_period = []
         reflected_in_first_period = []
         shots_in_second_period = []
         reflected_in_second_period = []
         shots_in_third_period = []
         reflected_in_third_period = []
-        for game in last_five_games:
+        for game in games:
             if game['first_team_name_id'] == name:
-                fp_ft_shot = game['fp_ft_shot']
-                fp_ft_reflected = game['fp_ft_reflected']
-                sp_ft_shot = game['sp_ft_shot']
-                sp_ft_reflected = game['sp_ft_reflected']
-                tp_ft_shot = game['tp_ft_shot']
-                tp_ft_reflected = game['tp_ft_reflected']
-                shots_in_first_period.append(int(fp_ft_shot))
-                reflected_in_first_period.append(int(fp_ft_reflected))
-                shots_in_second_period.append(int(sp_ft_shot))
-                reflected_in_second_period.append(int(sp_ft_reflected))
-                shots_in_third_period.append(int(tp_ft_shot))
-                reflected_in_third_period.append(int(tp_ft_reflected))
+                shots_in_first_period.append(int(game['fp_ft_shot']))
+                reflected_in_first_period.append(int(game['fp_ft_reflected']))
+                shots_in_second_period.append(int(game['sp_ft_shot']))
+                reflected_in_second_period.append(int(game['sp_ft_reflected']))
+                shots_in_third_period.append(int(game['tp_ft_shot']))
+                reflected_in_third_period.append(int(game['tp_ft_reflected']))
             else:
-                fp_st_shot = game['fp_st_shot']
-                fp_st_reflected = game['fp_st_reflected']
-                sp_st_shot = game['sp_st_shot']
-                sp_st_reflected = game['sp_st_reflected']
-                tp_st_shot = game['tp_st_shot']
-                tp_st_reflected = game['tp_st_reflected']
-                shots_in_first_period.append(int(fp_st_shot))
-                reflected_in_first_period.append(int(fp_st_reflected))
-                shots_in_second_period.append(int(sp_st_shot))
-                reflected_in_second_period.append(int(sp_st_reflected))
-                shots_in_third_period.append(int(tp_st_shot))
-                reflected_in_third_period.append(int(tp_st_reflected))
-        shots_in_first_period = sum(shots_in_first_period) // len(shots_in_first_period)
-        last_five_games_context['shots_in_first_period'] = shots_in_first_period
-        reflected_in_first_period = sum(reflected_in_first_period) // len(reflected_in_first_period)
-        last_five_games_context['reflected_in_first_period'] = reflected_in_first_period
-        shots_in_second_period = sum(shots_in_second_period) // len(shots_in_second_period)
-        last_five_games_context['shots_in_second_period'] = shots_in_second_period
-        reflected_in_second_period = sum(reflected_in_second_period) // len(reflected_in_second_period)
-        last_five_games_context['reflected_in_second_period'] = reflected_in_second_period
-        shots_in_third_period = sum(shots_in_third_period) // len(shots_in_third_period)
-        last_five_games_context['shots_in_third_period'] = shots_in_third_period
-        reflected_in_third_period = sum(reflected_in_third_period) // len(reflected_in_third_period)
-        last_five_games_context['reflected_in_third_period'] = reflected_in_third_period
+                shots_in_first_period.append(int(game['fp_st_shot']))
+                reflected_in_first_period.append(int(game['fp_st_reflected']))
+                shots_in_second_period.append(int(game['sp_st_shot']))
+                reflected_in_second_period.append(int(game['sp_st_reflected']))
+                shots_in_third_period.append(int(game['tp_st_shot']))
+                reflected_in_third_period.append(int(game['tp_st_reflected']))
+        last_five_games_context['shots_in_first_period'] = sum(shots_in_first_period) // \
+                                                           len(shots_in_first_period)
+        last_five_games_context['reflected_in_first_period'] = sum(reflected_in_first_period) // \
+                                                               len(reflected_in_first_period)
+        last_five_games_context['shots_in_second_period'] = sum(shots_in_second_period) // \
+                                                            len(shots_in_second_period)
+        last_five_games_context['reflected_in_second_period'] = sum(reflected_in_second_period) // \
+                                                                len(reflected_in_second_period)
+        last_five_games_context['shots_in_third_period'] = sum(shots_in_third_period) // \
+                                                           len(shots_in_third_period)
+        last_five_games_context['reflected_in_third_period'] = sum(reflected_in_third_period) // \
+                                                               len(reflected_in_third_period)
         return last_five_games_context
 
     def get_all_games_numbers(name):
         all_games_context = {}
-        games = NhlGameStat.objects.filter(first_team_name_id=name).order_by('-game_data') | \
-                NhlGameStat.objects.filter(second_team_name_id=name).order_by('-game_data')
-        all_games = games.values()
+        games_if_first_team = NhlGameStat.objects.filter(first_team_name_id=name)
+        games_if_second_team = NhlGameStat.objects.filter(second_team_name_id=name)
+        games = games_if_first_team.union(games_if_second_team).order_by('-game_id').values()
         shots_in_first_period_all_games = []
         reflected_in_first_period_all_games = []
         shots_in_second_period_all_games = []
         reflected_in_second_period_all_games = []
         shots_in_third_period_all_games = []
         reflected_in_third_period_all_games = []
-        for game in all_games:
+        for game in games:
             if game['first_team_name_id'] == name:
-                fp_ft_shot = game['fp_ft_shot']
-                fp_ft_reflected = game['fp_ft_reflected']
-                sp_ft_shot = game['sp_ft_shot']
-                sp_ft_reflected = game['sp_ft_reflected']
-                tp_ft_shot = game['tp_ft_shot']
-                tp_ft_reflected = game['tp_ft_reflected']
-                shots_in_first_period_all_games.append(int(fp_ft_shot))
-                reflected_in_first_period_all_games.append(int(fp_ft_reflected))
-                shots_in_second_period_all_games.append(int(sp_ft_shot))
-                reflected_in_second_period_all_games.append(int(sp_ft_reflected))
-                shots_in_third_period_all_games.append(int(tp_ft_shot))
-                reflected_in_third_period_all_games.append(int(tp_ft_reflected))
+                shots_in_first_period_all_games.append(int(game['fp_ft_shot']))
+                reflected_in_first_period_all_games.append(int(game['fp_ft_reflected']))
+                shots_in_second_period_all_games.append(int(game['sp_ft_shot']))
+                reflected_in_second_period_all_games.append(int(game['sp_ft_reflected']))
+                shots_in_third_period_all_games.append(int(game['tp_ft_shot']))
+                reflected_in_third_period_all_games.append(int(game['tp_ft_reflected']))
             else:
-                fp_st_shot = game['fp_st_shot']
-                fp_st_reflected = game['fp_st_reflected']
-                sp_st_shot = game['sp_st_shot']
-                sp_st_reflected = game['sp_st_reflected']
-                tp_st_shot = game['tp_st_shot']
-                tp_st_reflected = game['tp_st_reflected']
-                shots_in_first_period_all_games.append(int(fp_st_shot))
-                reflected_in_first_period_all_games.append(int(fp_st_reflected))
-                shots_in_second_period_all_games.append(int(sp_st_shot))
-                reflected_in_second_period_all_games.append(int(sp_st_reflected))
-                shots_in_third_period_all_games.append(int(tp_st_shot))
-                reflected_in_third_period_all_games.append(int(tp_st_reflected))
-        shots_in_first_period_all_games = sum(shots_in_first_period_all_games) // \
-                                          len(shots_in_first_period_all_games)
-        all_games_context['shots_in_first_period_all_games'] = shots_in_first_period_all_games
-        reflected_in_first_period_all_games = sum(reflected_in_first_period_all_games) // \
-                                              len(reflected_in_first_period_all_games)
-        all_games_context['reflected_in_first_period_all_games'] = reflected_in_first_period_all_games
-        shots_in_second_period_all_games = sum(shots_in_second_period_all_games) // \
-                                           len(shots_in_second_period_all_games)
-        all_games_context['shots_in_second_period_all_games'] = shots_in_second_period_all_games
-        reflected_in_second_period_all_games = sum(reflected_in_second_period_all_games) // \
-                                               len(reflected_in_second_period_all_games)
-        all_games_context['reflected_in_second_period_all_games'] = reflected_in_second_period_all_games
-        shots_in_third_period_all_games = sum(shots_in_third_period_all_games) // \
-                                          len(shots_in_third_period_all_games)
-        all_games_context['shots_in_third_period_all_games'] = shots_in_third_period_all_games
-        reflected_in_third_period_all_games = sum(reflected_in_third_period_all_games) // \
-                                              len(reflected_in_third_period_all_games)
-        all_games_context['reflected_in_third_period_all_games'] = reflected_in_third_period_all_games
+                shots_in_first_period_all_games.append(int(game['fp_st_shot']))
+                reflected_in_first_period_all_games.append(int(game['fp_st_reflected']))
+                shots_in_second_period_all_games.append(int(game['sp_st_shot']))
+                reflected_in_second_period_all_games.append(int(game['sp_st_reflected']))
+                shots_in_third_period_all_games.append(int(game['tp_st_shot']))
+                reflected_in_third_period_all_games.append(int(game['tp_st_reflected']))
+        all_games_context['shots_in_first_period_all_games'] = sum(shots_in_first_period_all_games) // \
+                                                               len(shots_in_first_period_all_games)
+        all_games_context['reflected_in_first_period_all_games'] = sum(reflected_in_first_period_all_games) // \
+                                                                   len(reflected_in_first_period_all_games)
+        all_games_context['shots_in_second_period_all_games'] = sum(shots_in_second_period_all_games) // \
+                                                                len(shots_in_second_period_all_games)
+        all_games_context['reflected_in_second_period_all_games'] = sum(reflected_in_second_period_all_games) // \
+                                                                    len(reflected_in_second_period_all_games)
+        all_games_context['shots_in_third_period_all_games'] = sum(shots_in_third_period_all_games) // \
+                                                               len(shots_in_third_period_all_games)
+        all_games_context['reflected_in_third_period_all_games'] = sum(reflected_in_third_period_all_games) // \
+                                                                   len(reflected_in_third_period_all_games)
         return all_games_context
     context = {**get_last_game_numbers(name), **get_last_five_games_numbers(name), **get_all_games_numbers(name)}
     return render(request, 'score/nhlteamstat.html', context)
