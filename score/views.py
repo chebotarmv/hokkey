@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .models import KhlTeam, NhlTeam, KhlGameStat, NhlGameStat
+from .models import KhlTeam, NhlTeam
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from score.forms import *
@@ -32,6 +32,7 @@ def nhl_archive(request):
     data = NhlGameStat.objects.all().values().order_by('-game_id')
     return render(request, 'score/nhl_archive.html', context={'data': data})
 
+
 @login_required
 @permission_required('score.add_khlgamestat')
 def makekhldata(request):
@@ -45,6 +46,7 @@ def makekhldata(request):
     else:
         khlform = KhlGameStatForm()
     return render(request, "score/make_khl_data.html", {'form': khlform})
+
 
 @login_required
 @permission_required('score.add_nhlgamestat')
