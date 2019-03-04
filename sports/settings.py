@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'score',
     'rest_framework',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
