@@ -4,7 +4,7 @@ from . import views
 from rest_framework_swagger.views import get_swagger_view
 from .apiviews import KhlTeamsList, KhlGameStatList, KhlGameStatDetail, LastKhlGameDetail, LastFiveKhlGamesDetail, \
     AllKhlGamesDetail, NhlTeamsList, NhlGameStatList, NhlGameStatDetail, LastNhlGameDetail, LastFiveNhlGamesDetail, \
-    AllNhlGamesDetail
+    AllNhlGamesDetail, LastFiveKhlGames, LastFiveNhlGames
 
 schema_view = get_swagger_view(title='Polls API')
 
@@ -24,14 +24,16 @@ urlpatterns = [
     path('api/khl_games', KhlGameStatList.as_view(), name='khl_games_list'),
     path('api/khl_games/<int:pk>/', KhlGameStatDetail.as_view(), name='khl_game_detail'),
     path('api/khl_games/last_game/<name>', LastKhlGameDetail.as_view(), name='khl_last_game'),
-    path('api/khl_games/last_five_games/<name>', LastFiveKhlGamesDetail.as_view(), name='khl_last_five_game'),
+    path('api/khl_games/last_five_games/<name>', LastFiveKhlGamesDetail.as_view(), name='khl_last_five_game_detail'),
+    path('api/khl_games/last_five_games', LastFiveKhlGames.as_view(), name='khl_last_five_game'),
     path('api/khl_games/all_games/<name>', AllKhlGamesDetail.as_view(), name='khl_last_five_game'),
 
     path('api/nhl_teams', NhlTeamsList.as_view(), name='nhl_teams_list'),
     path('api/nhl_games', NhlGameStatList.as_view(), name='nhl_games_list'),
     path('api/nhl_games/<int:pk>/', NhlGameStatDetail.as_view(), name='nhl_game_detail'),
     path('api/nhl_games/last_game/<name>', LastNhlGameDetail.as_view(), name='nhl_last_game'),
-    path('api/nhl_games/last_five_games/<name>', LastFiveNhlGamesDetail.as_view(), name='nhl_last_five_game'),
+    path('api/nhl_games/last_five_games/<name>', LastFiveNhlGamesDetail.as_view(), name='nhl_last_five_game_detail'),
+    path('api/nhl_games/last_five_games', LastFiveNhlGames.as_view(), name='nhl_last_five_game'),
     path('api/nhl_games/all_games/<name>', AllNhlGamesDetail.as_view(), name='nhl_last_five_game'),
 
     path(r'swagger-docs/', schema_view),

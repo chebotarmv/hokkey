@@ -41,6 +41,12 @@ class LastFiveKhlGamesDetail(APIView):
         return Response(data)
 
 
+class LastFiveKhlGames(APIView):
+    def get(self, request):
+        data = KhlGameStat.objects.order_by('-game_id').values()[:5]
+        return Response(data, headers={'Content-type': 'application/json; charset=UTF-8'})
+
+
 class AllKhlGamesDetail(APIView):
     def get(self, request, name):
         data = get_all_khl_games_numbers(name)
@@ -77,6 +83,12 @@ class LastNhlGameDetail(APIView):
 class LastFiveNhlGamesDetail(APIView):
     def get(self, request, name):
         data = get_last_five_nhl_games_numbers(name)
+        return Response(data)
+
+
+class LastFiveNhlGames(APIView):
+    def get(self, request):
+        data = NhlGameStat.objects.order_by('-game_id').values()[:5]
         return Response(data)
 
 
